@@ -27,7 +27,7 @@ let JwtStrategy = class JwtStrategy extends (0, passport_1.PassportStrategy)(pas
                 },
             ]),
             ignoreExpiration: false,
-            secretOrKey: 'your-secret-key',
+            secretOrKey: process.env.JWT_SECRET
         });
         this.jwtService = jwtService;
     }

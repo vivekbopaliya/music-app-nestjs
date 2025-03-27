@@ -41,11 +41,14 @@ let AuthService = class AuthService {
     async login(user) {
         const payload = { email: user.email, id: user.id };
         return {
-            access_token: this.jwtService.sign(payload, { secret: 'your-secret-key' }),
+            access_token: this.jwtService.sign(payload, { secret: process.env.JWT_SECRET }),
         };
     }
     async register(createUserDto) {
-        console.log("this is called");
+        const alreadyExists = await this.usersService.findByEmail(createUserDto.email);
+        if (alreadyExists) {
+            throw new common_1.UnauthorizedException("This Email is already registered");
+        }
         const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
         const user = await this.usersService.create(Object.assign(Object.assign({}, createUserDto), { password: hashedPassword }));
         const { password } = user, result = __rest(user, ["password"]);

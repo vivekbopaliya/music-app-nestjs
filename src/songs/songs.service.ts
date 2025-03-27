@@ -24,12 +24,11 @@ export class SongsService {
   }
 
   async search(query: string): Promise<Song[]> {
-    const querySmallLetter = query.toLowerCase();
     return await this.songsRepository.find({
       where: [
-        { title: Like(`%${querySmallLetter}%`) },
-        { artist: Like(`%${querySmallLetter}%`) },
-        { genre: Like(`%${querySmallLetter}%`) },
+        { title: Like(`%${query}%`) },
+        { artist: Like(`%${query}%`) },
+        { genre: Like(`%${query}%`) },
       ],
     });
   }

@@ -31,12 +31,11 @@ let SongsService = class SongsService {
         return await this.songsRepository.find();
     }
     async search(query) {
-        const querySmallLetter = query.toLowerCase();
         return await this.songsRepository.find({
             where: [
-                { title: (0, typeorm_2.Like)(`%${querySmallLetter}%`) },
-                { artist: (0, typeorm_2.Like)(`%${querySmallLetter}%`) },
-                { genre: (0, typeorm_2.Like)(`%${querySmallLetter}%`) },
+                { title: (0, typeorm_2.Like)(`%${query}%`) },
+                { artist: (0, typeorm_2.Like)(`%${query}%`) },
+                { genre: (0, typeorm_2.Like)(`%${query}%`) },
             ],
         });
     }
